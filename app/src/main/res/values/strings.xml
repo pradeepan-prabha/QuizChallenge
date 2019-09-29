@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Quiz Challenge</string>
+    <string name="player_Created_str">Player Created successfully</string>
+
+
+    <string name="checkintorserver">Not able to reach server. Make sure that Wi-Fi or cellular mobile data is turned on,and then try again.</string>
+    <!--Alter message-->
+    <string name="noInternetConnection">Check Connectivity</string>
+    <string name="noInternetConnectionMgs">No internet connection. Make sure that Wi-Fi or cellular mobile data is turned on,and then try again.</string>
+    <string name="message">Message</string>
+    <string name="logout">Logout</string>
+    <string name="pleasewait">Please wait.....</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="errorTeamNameStr">Enter Team Name</string>
+    <string name="errorPlayerNameStr">Enter Player Name</string>
+</resources>
