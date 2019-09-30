@@ -1,7 +1,9 @@
 package com.hitech.quizchallenge;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +28,7 @@ import com.mongodb.lang.NonNull;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
 import com.mongodb.stitch.android.core.auth.StitchUser;
+import com.mongodb.stitch.android.services.mongodb.remote.RemoteFindIterable;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
 import com.mongodb.stitch.core.auth.providers.anonymous.AnonymousCredential;
@@ -40,20 +43,23 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private int i = 0;
-    private StitchAppClient client;
-    private RemoteMongoClient mongoClient;
+    public static StitchAppClient client;
+    public static RemoteMongoClient mongoClient;
+    private Button button;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = findViewById(R.id.button);
+        button = findViewById(R.id.button);
 
         EditText editTeamName = findViewById(R.id.editTeamName);
         EditText editPlayerName = findViewById(R.id.editPlayerName);
         TextInputLayout playerNameLo = findViewById(R.id.playerNameLo);
         TextInputLayout teamNameLo = findViewById(R.id.teamNameLo);
+        pDialog = new ProgressDialog(this);
 
         //Hide keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -62,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 Stitch.initializeDefaultAppClient("quizchallengestitch-ernws");
         mongoClient =
                 client.getServiceClient(RemoteMongoClient.factory, "mongodb-atlas");
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendCreatePlayerRequest(EditText editTeamName, EditText editPlayerName) {
-
+        pDialog.setMessage(getString(R.string.pleasewait));
+        pDialog.setCancelable(false);
+        pDialog.show();
         final RemoteMongoCollection<Document> coll =
                 mongoClient.getDatabase("QuizChallengeDBTest").getCollection("UserDetailsTest");
 
@@ -140,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public Task<RemoteUpdateResult> then(@NonNull Task<StitchUser> task) throws Exception {
                         if (!task.isSuccessful()) {
+                            if(pDialog!=null) {
+                                if (pDialog.isShowing()) {
+                                    pDialog.dismiss();
+                                }
+                            }
                             Log.e("STITCH", "Login failed!");
                             throw task.getException();
                         }
@@ -161,22 +173,42 @@ public class MainActivity extends AppCompatActivity {
             public Task<List<Document>> then(@NonNull Task<RemoteUpdateResult> task) throws Exception {
                 if (!task.isSuccessful()) {
                     Toast.makeText(MainActivity.this, getString(R.string.checkintorserver), Toast.LENGTH_SHORT).show();
-
                     Log.e("STITCH", "Update failed!");
+                    if(pDialog!=null) {
+                        if (pDialog.isShowing()) {
+                            pDialog.dismiss();
+                        }
+                    }
                     throw task.getException();
                 }
                 List<Document> docs = new ArrayList<>();
+                if(pDialog!=null) {
+                    if (pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                }
                 return coll
                         .find(new Document("owner_id", client.getAuth().getUser().getId()))
                         .limit(100)
                         .into(docs);
+
             }
         }).addOnCompleteListener(new OnCompleteListener<List<Document>>() {
             @Override
             public void onComplete(@NonNull Task<List<Document>> task) {
+
+                if(pDialog!=null) {
+                    if (pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                }
                 if (task.isSuccessful()) {
                     Log.d("STITCH", "Found docs: " + task.getResult().toString());
                     Toast.makeText(MainActivity.this, getString(R.string.player_Created_str), Toast.LENGTH_SHORT).show();
+                    Intent inte = new Intent(MainActivity.this, QuizQuestionListActivity.class);
+                    inte.putExtra("teamNameStr",editTeamName.getText().toString().trim());
+                    inte.putExtra("playerNameStr",editPlayerName.getText().toString().trim());
+                    startActivity(inte);
                     return;
                 }
                 Log.e("STITCH", "Error: " + task.getException().toString());

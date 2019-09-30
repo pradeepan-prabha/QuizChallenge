@@ -1,77 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:layout_margin="16dp"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="@color/button_quiz_choice_correct"
+    android:padding="32dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Create Player"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/button_quiz_choice_correct"
-        android:textStyle="bold" />
-<LinearLayout
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/teamNameLo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        app:counterEnabled="true"
-        app:counterMaxLength="15"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        app:passwordToggleEnabled="true">
-    <EditText
-        android:id="@+id/editTeamName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:maxLength="15"
-        android:singleLine="true"
-        android:textColorHint="#c7c7c7"
-        android:layout_marginBottom="16dp"
-        android:hint="Team Name" />
-    </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/playerNameLo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        app:counterEnabled="true"
-        app:counterMaxLength="15"
-        app:passwordToggleEnabled="true">
-    <EditText
-        android:id="@+id/editPlayerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:maxLength="15"
-        android:singleLine="true"
-        android:textColorHint="#c7c7c7"
-        android:hint="Player Name" />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/button_corner_round"
-        android:padding="8dp"
-        android:text="Submit"
-        android:textColor="@android:color/white" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="16dp"
+            app:cardMaxElevation="16dp">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="8dp"
+                tools:context=".MainActivity">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:src="@drawable/knowledge" />
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create Player"
+                    android:layout_gravity="center"
+                    android:textColor="@color/button_quiz_choice_correct"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/teamNameLo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="15"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/editTeamName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:hint="Team Name"
+                            android:maxLength="15"
+                            android:singleLine="true"
+                            android:textColorHint="#c7c7c7" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/playerNameLo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="15"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/editPlayerName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Player Name"
+                            android:maxLength="15"
+                            android:singleLine="true"
+
+                            android:textColorHint="#c7c7c7" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/button_corner_round"
+                    android:padding="8dp"
+                    android:text="Submit"
+                    android:elevation="10dp"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:layout_marginEnd="8dp"
+                android:foregroundGravity="left"
+                android:text="Developed by Pradeepan"
+                android:textColor="@color/darkGray" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
